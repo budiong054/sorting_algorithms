@@ -31,6 +31,9 @@ void insertion_sort_list(listint_t **list)
 	listint_t *prev_element;
 	int len;
 
+	if (*list == NULL)
+		return;
+
 	len = len_list(*list);
 	if (len < 2)
 		return;
