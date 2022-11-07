@@ -8,6 +8,7 @@
 int len_list(listint_t *list)
 {
 	int len = 0;
+
 	while (list)
 	{
 		len++;
