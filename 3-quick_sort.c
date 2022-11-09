@@ -50,21 +50,29 @@ size_t partition(int *array, size_t lb, size_t ub, size_t size)
 {
 	int pivot;
 	size_t i, j;
+	int fswap;
 
 	pivot = array[ub];
 	i = lb - 1; /* temporary pivot index */
 
+	fswap = 0;
 	for (j = lb; j < ub; j++)
 	{
 		if (array[j] <= pivot)
 		{
 			i++;
 			swap(&array[i], &array[j]);
+			if (array[i] != array[j] || i != j)
+			{
+				print_array(array, size);
+				fswap = 1;
+			}
 		}
 	}
 	i++;
 	swap(&array[i], &array[ub]);
-	print_array(array, size);
+	if (fswap || i != ub)
+		print_array(array, size);
 	return (i); /* index of the pivot elemenet */
 }
 
