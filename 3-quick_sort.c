@@ -12,42 +12,73 @@ void quick_sort(int *array, size_t size)
 {
 	if (size < 2)
 		return;
-	
-	_qsort(array, 0, size - 1);
+	_qsort(array, 0, size - 1, size);
 }
 
-void _qsort(int *array, ssize_t low_index, ssize_t high_index)
+/**
+ * _qsort - Sort the array recursively
+ * @array: The array to be sorted
+ * @lb: The lower bound of the index
+ * @ub: The upper bound of the index
+ * @size: The size of the array
+ * Return: Nothing
+ */
+
+void _qsort(int *array, ssize_t lb, ssize_t ub, size_t size)
 {
-	int pivot, temp;
-	ssize_t p;	/* partition */
-	ssize_t j;
-	ssize_t size;
+	size_t p;	/* piovt index */
 
-	size = sizeof(*array) / sizeof(array[0]);
-
-	if (low_index >= high_index || low_index < 0)
+	if (lb >= ub)
 		return;
 
-	pivot = array[high_index];
-	
-	p = low_index - 1;
+	p = partition(array, lb, ub, size);
 
-	for (j = low_index; j < high_index - 1; j++)
+	_qsort(array, lb, p - 1, size);
+	_qsort(array, p + 1, ub, size);
+}
+
+/**
+ * partition - Partition the array into two part
+ * @array: The array to be partition
+ * @lb: The lower bound of the index
+ * @ub: The upper bound of the index
+ * @size: The size of the array
+ * Return: The right index of the pivot element
+ */
+
+size_t partition(int *array, size_t lb, size_t ub, size_t size)
+{
+	int pivot;
+	size_t i, j;
+
+	pivot = array[ub];
+	i = lb - 1; /* temporary pivot index */
+
+	for (j = lb; j < ub; j++)
 	{
 		if (array[j] <= pivot)
 		{
-			p++;
-			temp = array[j];
-			array[j] = array[p];
-			array[p] = temp;
-			print_array(array, size);
+			i++;
+			swap(&array[i], &array[j]);
 		}
 	}
-	p++;
-	temp = array[p];
-	array[p] = array[high_index];
-	array[high_index] = temp;
+	i++;
+	swap(&array[i], &array[ub]);
+	print_array(array, size);
+	return (i); /* index of the pivot elemenet */
+}
 
-	_qsort(array, low_index, p - 1);
-	_qsort(array, p + 1, high_index);
+/**
+ * swap - Swaps the position of two numbers
+ * @a: The first integer
+ * @b: The second integer
+ * Return: Nothing
+ */
+void swap(int *a, int *b)
+{
+	int temp;
+
+	temp = *a;
+	*a = *b;
+	*b = temp;
 }

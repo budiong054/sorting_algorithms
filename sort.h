@@ -23,7 +23,9 @@ void print_list(const listint_t *list);
 
 /* helper function */
 int len_list(listint_t *list);
-void _qsort(int *array, ssize_t low_index, ssize_t high_index);
+void swap(int *a, int *b);
+void _qsort(int *array, ssize_t lb, ssize_t ub, size_t size);
+size_t partition(int *array, size_t lb, size_t ub, size_t size);
 
 void bubble_sort(int *array, size_t size);
 void insertion_sort_list(listint_t **list);
